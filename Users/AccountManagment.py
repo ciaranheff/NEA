@@ -46,6 +46,8 @@ def ShowAll(Admin): #Admin perammeter needed as it will show passwords
     else:
         print("You do not have permission")
 
+#print(ShowAll("Y")) shows all SQL database for users DEBUG USE ONLY
+
 ######################### SaveData Table #######################
 
 def SaveData():
