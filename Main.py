@@ -1,4 +1,7 @@
 ######### Importing #############
+import os
+import time
+#################################
 import Users.LogIn
 UL = Users.LogIn
 #################################
@@ -8,6 +11,7 @@ UA = Users.AccountManagment
 from Questions.Particles import Question1
 ######### Fuctions #############
 
+######### Screens ##############
 def Login(): # Log in for users (lowest level)
     userfound = False
     while userfound == False:
@@ -22,16 +26,23 @@ def Login(): # Log in for users (lowest level)
             password = input("What is your password ")
             if UL.CheckPassword(User,password) == True:
                 Admin = UL.CheckAdmin(User)
+                os.system("cls") # clears screen to prevent clutter
                 return (User,Admin)
-                break # breaks out of the loop preventing any unessisary loops
             else:
                 print("wrong password",i+1,"/ 3") #shows number of password attemtps left
         print("Too many wrong attempts")
-        print("##############") # replace with cls
+        time.sleep(1) # gives 1 second to read error message to prevent confusion
+        os.system("cls") # clears screen to prevent clutter
         Login()
 
+def AdminHomeScreen(User):
+    print("""---Admin Menu---
+1. Results Search
+2. Manage Users
+9. Exit""")
+
 def HomeScreen(User):
-    print("here")
+    print("User")
 
 
 ######### Veriables #############
@@ -41,7 +52,9 @@ Admin = False
 while True: 
     if User == False:
         User,Admin = Login()
-        print(User,Admin)
     else:
-        HomeScreen(User)
-        break
+        if Admin == True:
+            AdminHomeScreen(User)
+            break
+        else:
+            HomeScreen(User)
