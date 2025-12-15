@@ -1,3 +1,4 @@
+# @@@ = come back to at the end
 ######### Importing #############
 import os
 import time
@@ -14,6 +15,7 @@ from Questions.Particles import Question1
 ######### Screens ##############
 def Login(): # Log in for users (lowest level)
     userfound = False
+    print(UL.GetUserNames()) #reformat to make look pretty @@@
     while userfound == False:
         User = input("What is your user name ") 
         if UL.CheckForUser(User) == True: #checks to see if user exisits
