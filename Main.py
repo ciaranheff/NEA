@@ -33,7 +33,7 @@ def Login(): # Log in for users (lowest level)
         print("Too many wrong attempts")
         time.sleep(1) # gives 1 second to read error message to prevent confusion
         os.system("cls") # clears screen to prevent clutter
-        Login()
+        Login() # loops back to the start of the function
 
 def AdminHomeScreen(User):
     print("""---Admin Menu---
