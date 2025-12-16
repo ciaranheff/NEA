@@ -9,31 +9,40 @@ UL = Users.LogIn
 import Users.AccountManagment
 UA = Users.AccountManagment
 #################################
+import Users.AdminFunctions
+UAF = Users.AdminFunctions
+#################################
 from Questions.Particles import Question1
 ######### Fuctions #############
 
 ######### Screens ##############
-######### Admin ################
+
+######### Admin Specific ################
 def AdminResultsSearch():
-    print("""What kind of data do you want:
-1. User specific
-2. Topic specific 
-3. All Data
-9. Return""")
-    ans = int(input())
-    if ans == 1:
-        print(UL.GetUserNames())
-        who = input("Whos data do you want to find ")
-        
-    elif ans == 2:
-        pass
-    elif ans == 3:
-        pass
-    elif ans == 9:
-        return()
-    else:
-        print("invalid respone")
-        AdminResultsSearch()
+    while True:
+            print(f"---Search Menu---\nWhat kind of data do you want:\n1. User specific\n2. Topic specific\n3. All Data\n9. Return")
+            ans = input()
+            if ans == '1':
+                os.system("cls") # clears screen
+                UAF.UserSpecific()
+                
+            elif ans == '2':
+                pass
+            elif ans == '3':
+                out = False
+                os.system("cls")
+                print(UA.SaveData())
+                while out == False:
+                    out = input("Enter any key to escape")
+                os.system("cls")
+
+
+            elif ans == '9':
+                os.system("cls")
+                return()
+            else:
+                print("invalid respone")
+
 
 ################################
 def Login(): # Log in for users (lowest level)
@@ -61,20 +70,24 @@ def Login(): # Log in for users (lowest level)
         Login() # loops back to the start of the function
 
 def AdminHomeScreen(User):
-    print("""---Admin Menu---
+    while True:
+            print("""---Admin Menu---
 1. Results Search
 2. Manage Users
 9. Exit""")
-    ans = int(input())
-    if ans == 1:
-        AdminResultsSearch()
-    elif ans == 2:
-        pass
-    elif ans == 9:
-        return()
-    else:
-        print("invalid input ")
-        AdminHomeScreen(User)
+            ans = input()
+            if ans == '1':
+                os.system("cls")
+                AdminResultsSearch()
+            elif ans == '2':
+                pass
+            elif ans == '9':
+                os.system("cls")
+                print("Good Bye")
+                return()
+            else:
+                os.system("cls")
+                print("invalid input ")
 
 def HomeScreen(User):
     print("User")

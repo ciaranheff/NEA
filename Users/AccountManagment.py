@@ -19,7 +19,8 @@ def AddUser(Name,Password,Admin):
 
 def DeleteUser(Name,Admin):
     if Admin == "Y": #checks to see if you have permision 
-        cursor.execute("DELETE FROM Users WHERE UserName = ?", (Name,)) # deletes all data under the username
+        cursor.execute("DELETE FROM Users WHERE UserName = ?", (Name,)) # deletes user from user databvase
+        cursor.execute("DELETE FROM SaveData WHERE UserName = ?", (Name,)) # deletes all user data from savedata database
         connection.commit()
     else:
         print("you do not have permission")
@@ -60,7 +61,7 @@ def UserAll(Name): # gets all user specific from Savedata
     results = cursor.fetchall()
     return results
 
-def UserQuestion(Name): #need to change quotation marks around as colum names need it when more than 1 word long
+def UserQuestion(Name): #need to change quotation marks around as colum names need it when more than 1 word long (in the exacute part)
     cursor.execute('SELECT Correct , "Answer Give" , "Remake Code" FROM SaveData WHERE UserName = ?', (Name,))
     results = cursor.fetchall()
     return results
