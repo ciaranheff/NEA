@@ -13,6 +13,29 @@ from Questions.Particles import Question1
 ######### Fuctions #############
 
 ######### Screens ##############
+######### Admin ################
+def AdminResultsSearch():
+    print("""What kind of data do you want:
+1. User specific
+2. Topic specific 
+3. All Data
+9. Return""")
+    ans = int(input())
+    if ans == 1:
+        print(UL.GetUserNames())
+        who = input("Whos data do you want to find ")
+        
+    elif ans == 2:
+        pass
+    elif ans == 3:
+        pass
+    elif ans == 9:
+        return()
+    else:
+        print("invalid respone")
+        AdminResultsSearch()
+
+################################
 def Login(): # Log in for users (lowest level)
     userfound = False
     print(UL.GetUserNames()) #reformat to make look pretty @@@
@@ -42,6 +65,16 @@ def AdminHomeScreen(User):
 1. Results Search
 2. Manage Users
 9. Exit""")
+    ans = int(input())
+    if ans == 1:
+        AdminResultsSearch()
+    elif ans == 2:
+        pass
+    elif ans == 9:
+        return()
+    else:
+        print("invalid input ")
+        AdminHomeScreen(User)
 
 def HomeScreen(User):
     print("User")
