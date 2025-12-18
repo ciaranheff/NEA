@@ -17,33 +17,6 @@ from Questions.Particles import Question1
 
 ######### Screens ##############
 
-######### Admin Specific ################
-def AdminResultsSearch():
-    while True:
-            print(f"---Search Menu---\nWhat kind of data do you want:\n1. User specific\n2. Topic specific\n3. All Data\n9. Return")
-            ans = input()
-            if ans == '1':
-                os.system("cls") # clears screen
-                UAF.UserSpecific()
-                
-            elif ans == '2':
-                pass
-            elif ans == '3':
-                out = False
-                os.system("cls")
-                print(UA.SaveData())
-                while out == False:
-                    out = input("Enter any key to escape")
-                os.system("cls")
-
-
-            elif ans == '9':
-                os.system("cls")
-                return()
-            else:
-                print("invalid respone")
-
-
 ################################
 def Login(): # Log in for users (lowest level)
     userfound = False
@@ -78,7 +51,7 @@ def AdminHomeScreen(User):
             ans = input()
             if ans == '1':
                 os.system("cls")
-                AdminResultsSearch()
+                UAF.AdminResultsSearch()
             elif ans == '2':
                 pass
             elif ans == '9':
