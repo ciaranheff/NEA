@@ -97,6 +97,7 @@ def HomeScreen(User):
 User = False
 Admin = False
 ######### Main Loop ##########
+
 while True: 
     if User == False:
         User,Admin = Login()

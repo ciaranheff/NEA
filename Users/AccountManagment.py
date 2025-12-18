@@ -66,7 +66,12 @@ def UserQuestion(Name): #need to change quotation marks around as colum names ne
     results = cursor.fetchall()
     return results
 
-def UserCorrect(Name):
+def UserCorrectAll(Name):
     cursor.execute("SELECT Correct FROM SaveData WHERE UserName = ?", (Name,))
+    results = cursor.fetchall()
+    return results
+
+def UserCorrectSubject(Name,Subject):
+    cursor.execute("SELECT Correct FROM SaveData WHERE UserName = ? AND Topic = ?", (Name,Subject,))
     results = cursor.fetchall()
     return results
