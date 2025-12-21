@@ -33,13 +33,13 @@ def Login(): # Log in for users (lowest level)
             password = input("What is your password ")
             if UL.CheckPassword(User,password) == True:
                 Admin = UL.CheckAdmin(User)
-                os.system("cls") # clears screen to prevent clutter
+                os.system("clear") # clears screen to prevent clutter
                 return (User,Admin)
             else:
                 print("wrong password",i+1,"/ 3") #shows number of password attemtps left
         print("Too many wrong attempts")
         time.sleep(1) # gives 1 second to read error message to prevent confusion
-        os.system("cls") # clears screen to prevent clutter
+        os.system("clear") # clears screen to prevent clutter
         Login() # loops back to the start of the function
 
 def AdminHomeScreen(User):
@@ -50,16 +50,16 @@ def AdminHomeScreen(User):
 9. Exit""")
             ans = input()
             if ans == '1':
-                os.system("cls")
+                os.system("clear")
                 UAF.AdminResultsSearch()
             elif ans == '2':
                 pass
             elif ans == '9':
-                os.system("cls")
+                os.system("clear")
                 print("Good Bye")
                 return()
             else:
-                os.system("cls")
+                os.system("clear")
                 print("invalid input ")
 
 def HomeScreen(User):
