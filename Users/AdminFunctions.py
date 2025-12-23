@@ -164,9 +164,11 @@ def AdminAccountManagment():
             who = input("Who's admin status do you want to change ")
             if UL.CheckForUser(who) == True:
                 admin = False
-                while admin != "Y" and admin != "N":
+                while admin != "Y" and admin != "N": #makes sure the admin status is either Y or N
                     admin = input("Is this user an admin Y/N ")
                 UA.AdminChange(who,admin)
+                os.system("cls")
+                print(f"{who} admin status changed to '{admin}'")
             else:
                 os.system("cls")
                 print("Could not find User")
