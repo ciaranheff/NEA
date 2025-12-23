@@ -28,7 +28,7 @@ def PasswordChange(Name,NewPassword):
     connection.commit()
 
 def AdminChange(Name,NewAdmin):
-    cursor.execute("UPDATE Users SET Password = ? WHERE UserName = ?" , (NewAdmin,Name,))
+    cursor.execute("UPDATE Users SET Admin = ? WHERE UserName = ?" , (NewAdmin,Name,))
     connection.commit()
 
 def ShowAll(): #Admin perammeter needed as it will show passwords

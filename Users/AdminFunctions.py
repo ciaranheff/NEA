@@ -27,7 +27,9 @@ def AdminResultsSearch():
                 TopicSpecific()
             elif ans == '3':
                 os.system("cls")
-                print(UA.SaveData())
+                All = (UA.SaveData())
+                for i in range (len(All)):
+                    print(All[i-1])
                 KeepIn()
             elif ans == '9':
                 os.system("cls")
@@ -42,14 +44,15 @@ def TopicSpecific():
         if what == "":
             return()
         else:
-            try:
-                All = UA.CorrectSubject(what)
-                print(All)
+            All = UA.CorrectSubject(what)
+            if All != []:
+                print("Attempt Number - User - Topic - Remake code - Answer given - Correct")
+                for i in range(len(All)):
+                    print(All[i-1])
                 KeepIn()
-            except:
+            else:
                 print("Could not find Topic")
                 return()
-
 
 def UserSpecific():
     while True:
@@ -88,8 +91,6 @@ def UserSpecific():
                 return()
         else: # catch for when user does not exisit
             print("No user Found")
-
-
 
 def PercentageCorrect(who):
     Percentages = [] # list of all percentages
@@ -134,6 +135,7 @@ def AdminAccountManagment():
                 print(List[i-1])
             KeepIn()
         elif what == "2": # delete user
+            print(UL.GetUserNames())
             who = input("Who's account do you want to delete?: ")
             if UL.CheckForUser(who) == True:
                 check = input("Are you sure (Y)") # double checking they want to delete the user
@@ -150,6 +152,7 @@ def AdminAccountManagment():
             os.system("cls")
             UA.AddUser(name,password,admin)
         elif what == "4": #Change User password
+            print(UL.GetUserNames())
             who = input("Who's Password do you want to change ")
             if UL.CheckForUser(who) == True:
                 newpass = input("What is the new password ")
@@ -157,6 +160,15 @@ def AdminAccountManagment():
                 os.system("cls")
                 print("Cannot find User")
         elif what == "5": # Change User Admin status
-            pass
+            print(UL.GetUserNames()) #shows all the usernames
+            who = input("Who's admin status do you want to change ")
+            if UL.CheckForUser(who) == True:
+                admin = False
+                while admin != "Y" and admin != "N":
+                    admin = input("Is this user an admin Y/N ")
+                UA.AdminChange(who,admin)
+            else:
+                os.system("cls")
+                print("Could not find User")
         elif what == "9":
             return()

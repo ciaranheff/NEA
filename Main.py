@@ -15,8 +15,6 @@ UAF = Users.AdminFunctions
 from Questions.Particles import Question1
 ######### Fuctions #############
 
-######### Screens ##############
-
 ################################
 def Login(): # Log in for users (lowest level)
     userfound = False
@@ -64,7 +62,6 @@ def AdminHomeScreen(User):
 
 def HomeScreen(User):
     print("User")
-
 
 ######### Veriables #############
 User = False
