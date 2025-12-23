@@ -10,6 +10,12 @@ UA = Users.AccountManagment
 
 Subjects = ['A']
 
+def KeepIn(): # Function to wait for admin to read data before clearing the screen
+    out = False
+    while out == False:
+        out = input("Enter any key to escape")
+    os.system("cls") # clears screen to declutter
+
 def AdminResultsSearch():
     while True:
             print(f"---Search Menu---\nWhat kind of data do you want:\n1. User specific\n2. Topic specific\n3. All Data\n9. Return")
@@ -17,23 +23,33 @@ def AdminResultsSearch():
             if ans == '1':
                 os.system("cls") # clears screen
                 UserSpecific()
-                
             elif ans == '2':
-                pass
+                TopicSpecific()
             elif ans == '3':
-                out = False
                 os.system("cls")
                 print(UA.SaveData())
-                while out == False:
-                    out = input("Enter any key to escape")
-                os.system("cls")
-
-
+                KeepIn()
             elif ans == '9':
                 os.system("cls")
                 return()
             else:
                 print("invalid respone")
+
+def TopicSpecific():
+    while True:
+        print(f"{Subjects}\nWhat Subject would you like to see (press enter to exit)")
+        what = input()
+        if what == "":
+            return()
+        else:
+            try:
+                All = UA.CorrectSubject(what)
+                print(All)
+                KeepIn()
+            except:
+                print("Could not find Topic")
+                return()
+
 
 def UserSpecific():
     while True:
@@ -48,33 +64,24 @@ def UserSpecific():
             os.system("cls")
 
             if what == '1': #all data
-                out = False
                 print("Data points here")
                 results = (UA.UserAll(who)) #retreaves all data raw from database
                 for i in range (len(results)): #prints each entry on a new line
                     print(results[i])
-                while out == False: #makes it easier to see data by clearing everything and waiting till user wants to move on
-                    out = input("Enter any key to escape")
-                os.system("cls")
+                KeepIn()
 
             elif what == '2':# Minmal data
-                out = False
                 print("Correct Answer - Answer Given - Remake code")
                 results = (UA.UserQuestion(who)) #retreaves (answer given correct answer and remakecode) from database @@@ change temp1 to 'who'
                 for i in range (len(results)): #prints each entry on a new line
                     print(results[i])
-                while out == False: #makes it easier to see data by clearing everything and waiting till user wants to move on
-                    out = input("Enter any key to escape")
-                os.system("cls")
+                KeepIn()
 
             elif what == '3': #Stats
-                out = False
                 persent = PercentageCorrect(who)
                 for i in range (len(persent)):
                     print(persent[i-1])
-                while out == False: #makes it easier to see data by clearing everything and waiting till user wants to move on
-                    out = input("Enter any key to escape")
-                os.system("cls")
+                KeepIn()
 
             elif what == '9': #Exit
                 os.system("cls")
@@ -112,3 +119,44 @@ def PercentageCorrect(who):
             percent = 'NA'
         Percentages.append((Subjects[i-1],percent)) # adds percentage correct and subect to the percentages list
     return(Percentages) # returns the subject list
+
+#############################################################
+
+def AdminAccountManagment():
+    while True:
+        print(f"---Account Managment--- \n1.Show All User Data\n2.Delete User\n3.Add User\n4.Change Password\n5.Change Admin Status\n9.Exit")
+        what = input()
+        os.system("cls")
+        if what == "1": #shoe all user data
+            List = UA.ShowAll() # gets all data from the Users.db database
+            print("Username - Password - Admin")
+            for i in range (len(List)): # separates the data given
+                print(List[i-1])
+            KeepIn()
+        elif what == "2": # delete user
+            who = input("Who's account do you want to delete?: ")
+            if UL.CheckForUser(who) == True:
+                check = input("Are you sure (Y)") # double checking they want to delete the user
+                if check == "Y":
+                    UA.DeleteUser(who)
+                    print(f"{who} has been deleted")
+                    KeepIn()
+            else:
+                print("Could not find user")
+        elif what == "3": # add new User
+            name = input("What is the Username ")
+            password = input("What is the password ")
+            admin = input("Is the User an Admin Y/N (case sensative) ")
+            os.system("cls")
+            UA.AddUser(name,password,admin)
+        elif what == "4": #Change User password
+            who = input("Who's Password do you want to change ")
+            if UL.CheckForUser(who) == True:
+                newpass = input("What is the new password ")
+            else:
+                os.system("cls")
+                print("Cannot find User")
+        elif what == "5": # Change User Admin status
+            pass
+        elif what == "9":
+            return()

@@ -53,7 +53,7 @@ def AdminHomeScreen(User):
                 os.system("cls")
                 UAF.AdminResultsSearch()
             elif ans == '2':
-                pass
+                UAF.AdminAccountManagment()
             elif ans == '9':
                 os.system("cls")
                 print("Good Bye")

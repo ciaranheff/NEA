@@ -10,42 +10,31 @@ def Temp():
 #################### Users Table ######################
 
 def AddUser(Name,Password,Admin):
-    try: # exception handing needed as if Username already exisits it will cause the shell to crash
+    try: # exception handing needed as if Username (because its a PK) already exisits it will cause a crash
         cursor.execute("INSERT INTO Users (UserName,Password,Admin) VALUES (?,?,?)" , (Name,Password,Admin)) # adds new users
         connection.commit()
-        print("done")
+        print(f"New user {Name} has been Added")
     except:
         print("*** Error Adding New User ***")
 
-def DeleteUser(Name,Admin):
-    if Admin == "Y": #checks to see if you have permision 
-        cursor.execute("DELETE FROM Users WHERE UserName = ?", (Name,)) # deletes user from user databvase
-        cursor.execute("DELETE FROM SaveData WHERE UserName = ?", (Name,)) # deletes all user data from savedata database
-        connection.commit()
-    else:
-        print("you do not have permission")
+def DeleteUser(Name):
+    cursor.execute("DELETE FROM Users WHERE UserName = ?", (Name,)) # deletes user from user databvase
+    cursor.execute("DELETE FROM SaveData WHERE UserName = ?", (Name,)) # deletes all user data from savedata database
+    connection.commit()
 
-def PasswordChange(Name,NewPassword,Admin):
-    if Admin == "Y":
-        cursor.execute("UPDATE Users SET Password = ? WHERE UserName = ?" , (NewPassword,Name,))
-        connection.commit()
-    else:
-        print("You do not have permission")
 
-def AdminChange(Name,NewAdmin,Admin):
-    if Admin == "Y":
-        cursor.execute("UPDATE Users SET Password = ? WHERE UserName = ?" , (NewAdmin,Name,))
-        connection.commit()
-    else:
-        print("You do not have permission")
+def PasswordChange(Name,NewPassword):
+    cursor.execute("UPDATE Users SET Password = ? WHERE UserName = ?" , (NewPassword,Name,))
+    connection.commit()
 
-def ShowAll(Admin): #Admin perammeter needed as it will show passwords
-    if Admin == "Y":
-        cursor.execute("SELECT * FROM Users")
-        results = cursor.fetchall()
-        return results
-    else:
-        print("You do not have permission")
+def AdminChange(Name,NewAdmin):
+    cursor.execute("UPDATE Users SET Password = ? WHERE UserName = ?" , (NewAdmin,Name,))
+    connection.commit()
+
+def ShowAll(): #Admin perammeter needed as it will show passwords
+    cursor.execute("SELECT * FROM Users")
+    results = cursor.fetchall()
+    return results
 
 #print(ShowAll("Y")) shows all SQL database for users DEBUG USE ONLY
 
@@ -73,5 +62,10 @@ def UserCorrectAll(Name):
 
 def UserCorrectSubject(Name,Subject):
     cursor.execute("SELECT Correct FROM SaveData WHERE UserName = ? AND Topic = ?", (Name,Subject,))
+    results = cursor.fetchall()
+    return results
+
+def CorrectSubject(Subject):
+    cursor.execute("SELECT * FROM SaveData WHERE Topic = ?" ,(Subject,))
     results = cursor.fetchall()
     return results
