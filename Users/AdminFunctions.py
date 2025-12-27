@@ -74,7 +74,7 @@ def UserSpecific():
                 KeepIn()
 
             elif what == '2':# Minmal data
-                print("Correct Answer - Answer Given - Remake code")
+                print("Answer Correct - Topic")
                 results = (UA.UserQuestion(who)) #retreaves (answer given correct answer and remakecode) from database @@@ change temp1 to 'who'
                 for i in range (len(results)): #prints each entry on a new line
                     print(results[i])

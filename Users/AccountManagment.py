@@ -1,12 +1,13 @@
 import sqlite3
 connection = sqlite3.connect('Users.db') # Connects to sql database
 cursor = connection.cursor()
-
-def Temp():
-    cursor.execute("INSERT INTO SaveData VALUES ('4','temp4','A','ABC','15','Y')")
-    connection.commit()
     
-
+def Temp():
+    cursor.execute("INSERT INTO SaveData VALUES ('1','Temp2','A','Y')")
+    cursor.execute("INSERT INTO SaveData VALUES ('2','Temp2','A','Y')")
+    cursor.execute("INSERT INTO SaveData VALUES ('3','Temp2','A','N')")
+    cursor.execute("INSERT INTO SaveData VALUES ('4','Temp2','A','N')")
+    connection.commit()
 #################### Users Table ######################
 
 def AddUser(Name,Password,Admin):
@@ -51,7 +52,7 @@ def UserAll(Name): # gets all user specific from Savedata
     return results
 
 def UserQuestion(Name): #need to change quotation marks around as colum names need it when more than 1 word long (in the exacute part)
-    cursor.execute('SELECT Correct , "Answer Give" , "Remake Code" FROM SaveData WHERE UserName = ?', (Name,))
+    cursor.execute('SELECT Correct , "Topic" FROM SaveData WHERE UserName = ?', (Name,))
     results = cursor.fetchall()
     return results
 

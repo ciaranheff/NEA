@@ -42,26 +42,34 @@ def Login(): # Log in for users (lowest level)
 
 def AdminHomeScreen(User):
     while True:
-            print("""---Admin Menu---
-1. Results Search
-2. Manage Users
-9. Exit""")
-            ans = input()
-            if ans == '1':
-                os.system("cls")
-                UAF.AdminResultsSearch()
-            elif ans == '2':
-                UAF.AdminAccountManagment()
-            elif ans == '9':
-                os.system("cls")
-                print("Good Bye")
-                return()
-            else:
-                os.system("cls")
-                print("invalid input ")
+        ans = input(f"---Admin Menu---\n1. Results Search\n2. Manage Users\n9. Exit\n")
+        if ans == '1':
+            os.system("cls")
+            UAF.AdminResultsSearch()
+        elif ans == '2':
+            UAF.AdminAccountManagment()
+        elif ans == '9':
+            os.system("cls")
+            print("Good Bye")
+            return()
+        else:
+            os.system("cls")
+            print("invalid input ")
 
 def HomeScreen(User):
-    print("User")
+    while True:
+        ans = input(f"---Main Menu---\n1.Topic selection\n2.Multichoice\n3.Exit\n")
+        if ans == "1":
+            pass
+        elif ans == "2":
+            pass
+        elif ans == "3":
+            os.system("cls")
+            print("Good Bye")
+            return()
+        else:
+            os.system("cls")
+            print("invalid input")
 
 ######### Veriables #############
 User = False
@@ -77,3 +85,4 @@ while True:
             break
         else:
             HomeScreen(User)
+            break
