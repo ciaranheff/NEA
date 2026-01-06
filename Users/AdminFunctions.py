@@ -28,6 +28,11 @@ def AdminResultsSearch():
             elif ans == '3':
                 os.system("cls")
                 All = (UA.SaveData())
+                print("---Exam Questions---")
+                for i in range (len(All)):
+                    print(All[i-1])
+                print("---Multi Choice---")
+                All = (UA.MultiChoiceSaveData())
                 for i in range (len(All)):
                     print(All[i-1])
                 KeepIn()
@@ -63,7 +68,7 @@ def UserSpecific():
             os.system("cls")
             return()
         elif UL.CheckForUser(who) == True: # makes sure user exsists
-            what = input(f"---{who}---\n1. All Data \n2. Minimal data \n3. User Stats\n9. Return\n")
+            what = input(f"---{who}---\n1. All Data \n2. Minimal data \n3. User Stats\n4. MultiChoice\n9. Return\n")
             os.system("cls")
 
             if what == '1': #all data
@@ -84,6 +89,13 @@ def UserSpecific():
                 persent = PercentageCorrect(who)
                 for i in range (len(persent)):
                     print(persent[i-1])
+                KeepIn()
+
+            elif what == '4':
+                print("Data points here")
+                results = UA.UserMultiChoice(who)
+                for i in range (len(results)): #prints each entry on a new line
+                    print(results[i])
                 KeepIn()
 
             elif what == '9': #Exit
@@ -156,6 +168,9 @@ def AdminAccountManagment():
             who = input("Who's Password do you want to change ")
             if UL.CheckForUser(who) == True:
                 newpass = input("What is the new password ")
+                UA.PasswordChange(who,newpass)
+                os.system("cls")
+                print(f"{who}'s password changed to {newpass}")
             else:
                 os.system("cls")
                 print("Cannot find User")

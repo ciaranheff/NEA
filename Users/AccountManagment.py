@@ -21,6 +21,7 @@ def AddUser(Name,Password,Admin):
 def DeleteUser(Name):
     cursor.execute("DELETE FROM Users WHERE UserName = ?", (Name,)) # deletes user from user databvase
     cursor.execute("DELETE FROM SaveData WHERE UserName = ?", (Name,)) # deletes all user data from savedata database
+    cursor.execute("DELETE FROM MultiChoice WHERE UserName = ?", (Name,)) # deletes all user data from MultiChoice database
     connection.commit()
 
 
@@ -49,6 +50,8 @@ def SaveData():
 def UserAll(Name): # gets all user specific from Savedata
     cursor.execute("SELECT * FROM SaveData WHERE UserName = ?", (Name,))
     results = cursor.fetchall()
+    cursor.execute("SELECT * FROM MultiChoice WHERE UserName = ?", (Name,))
+    results += cursor.fetchall()
     return results
 
 def UserQuestion(Name): #need to change quotation marks around as colum names need it when more than 1 word long (in the exacute part)
@@ -70,3 +73,19 @@ def CorrectSubject(Subject):
     cursor.execute("SELECT * FROM SaveData WHERE Topic = ?" ,(Subject,))
     results = cursor.fetchall()
     return results
+
+def UserMultiChoice(Name):
+    cursor.execute("SELECT * FROM MultiChoice WHERE UserName = ?", (Name,))
+    results = cursor.fetchall()
+    return(results)
+
+def MultiChoiceSaveData():
+    cursor.execute("SELECT * FROM MultiChoice") # gets all table data from Savedata
+    results = cursor.fetchall()
+    return results
+
+def AddSaveData(UserName,Score,Total):
+    cursor.execute("INSERT INTO MultiChoice (UserName,Score,Total) VALUES (?,?,?)" , (UserName,Score,Total,)) # adds new Savedata
+    connection.commit()
+
+#print(MultiChoiceSaveData())

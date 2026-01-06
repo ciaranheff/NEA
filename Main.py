@@ -9,6 +9,8 @@ UL = Users.LogIn
 import Users.AdminFunctions
 UAF = Users.AdminFunctions
 #################################
+from Questions.MultiChoice import QuizStart
+from Questions.MultiChoice import QuestionList
 ######### Fuctions #############
 
 ################################
@@ -58,7 +60,7 @@ def HomeScreen(User):
         if ans == "1":
             pass
         elif ans == "2":
-            pass
+            QuizStart(QuestionList,User)
         elif ans == "3":
             os.system("cls")
             print("Good Bye")

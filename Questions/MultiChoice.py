@@ -1,4 +1,6 @@
 import random
+from Users.AccountManagment import AddSaveData
+
 class MCQuestions:
     def __init__(self,Question,Choices,Answer):#crating OOP stuffs
         self.Question = Question
@@ -30,6 +32,7 @@ class Quiz:
             else:
                 print("Wrong")
         print("Score was", self.score)
+        return(self.score)
 
 ######## Questions ############################################
 Q1 = MCQuestions("What relative charge does a alpha particle have?",f"1. 0\n2. +1\n3. +2","3")
@@ -64,14 +67,15 @@ def Adding(Length,QuestionList,quiz):
     for i in range(Length):
         quiz.NewQuestion(questionsToAdd[i-1])#calls the function to add the questions to the quiz
 
-def QuizStart(QuestionList):
+def QuizStart(QuestionList,UserName):
     quiz = Quiz() #initiates the class in the name quiz
     over = False #loop until over
     while over == False:
         try:
-            Length = int(input(f"How many questions would you like 1-{len(QuestionList)}: "))
-            Adding(Length,QuestionList,quiz)
-            quiz.MultiChoiceStart(Length)
-            over = True
+            Length = int(input(f"How many questions would you like 1-{len(QuestionList)}: ")) #lets user choose the length of the quiz
+            Adding(Length,QuestionList,quiz)# adds length number of questions to the quiz
+            Score = quiz.MultiChoiceStart(Length)# runs the quiz and stores the score
+            AddSaveData(UserName,Score,Length) #Saves the data to MultiChoice database
+            over = True #breaks loop
         except: # error catches if input is not a int
             print("Enter a number in the range")
