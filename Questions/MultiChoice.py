@@ -1,5 +1,11 @@
 import random
-from Users.AccountManagment import AddSaveData
+import json
+#from Users.AccountManagment import AddSaveData
+
+with open("MultiQuestions.json","r") as f:
+    data = json.load(f)
+
+print(data.Questions)
 
 class MCQuestions:
     def __init__(self,Question,Choices,Answer):#crating OOP stuffs
