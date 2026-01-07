@@ -130,7 +130,7 @@ def PercentageCorrect(who):
             percent = float((correct/total)*100) #finds percentage correct
         except: # error catch for when someone has not done a subject question to prevent 0 devision
             percent = 'NA'
-        Percentages.append((Subjects[i-1],percent)) # adds percentage correct and subect to the percentages list
+        Percentages.append((Subjects,percent)) # adds percentage correct and subect to the percentages list
     return(Percentages) # returns the subject list
 
 #############################################################
