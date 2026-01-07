@@ -1,6 +1,6 @@
 import random
 import json
-#from Users.AccountManagment import AddSaveData
+from Users.AccountManagment import AddSaveData
 
 with open("MultiQuestions.json","r") as f:
     data = json.load(f)
