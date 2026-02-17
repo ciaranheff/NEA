@@ -1,4 +1,5 @@
 import sqlite3
+from Users.LogIn import Hashing
 connection = sqlite3.connect('Users.db') # Connects to sql database
 cursor = connection.cursor()
     
@@ -12,6 +13,7 @@ def Temp():
 
 def AddUser(Name,Password,Admin):
     try: # exception handing needed as if Username (because its a PK) already exisits it will cause a crash
+        Password = Hashing(Password)
         cursor.execute("INSERT INTO Users (UserName,Password,Admin) VALUES (?,?,?)" , (Name,Password,Admin)) # adds new users
         connection.commit()
         print(f"New user {Name} has been Added")
@@ -26,6 +28,7 @@ def DeleteUser(Name):
 
 
 def PasswordChange(Name,NewPassword):
+    Password = Hashing(Password)
     cursor.execute("UPDATE Users SET Password = ? WHERE UserName = ?" , (NewPassword,Name,))
     connection.commit()
 
@@ -87,5 +90,3 @@ def MultiChoiceSaveData():
 def AddSaveData(UserName,Score,Total):
     cursor.execute("INSERT INTO MultiChoice (UserName,Score,Total) VALUES (?,?,?)" , (UserName,Score,Total,)) # adds new Savedata
     connection.commit()
-
-#print(MultiChoiceSaveData())

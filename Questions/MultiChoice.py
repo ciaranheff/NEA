@@ -5,8 +5,6 @@ from Users.AccountManagment import AddSaveData
 with open("MultiQuestions.json","r") as f:
     data = json.load(f)
 
-print(data.Questions)
-
 class MCQuestions:
     def __init__(self,Question,Choices,Answer):#crating OOP stuffs
         self.Question = Question
@@ -41,7 +39,7 @@ class Quiz:
         return(self.score)
 
 ######## Questions ############################################
-Q1 = MCQuestions("What relative charge does a alpha particle have?",f"1. 0\n2. +1\n3. +2","3")
+Q1 = MCQuestions("What relative charge does a alpha particle have?",    f"1. 0\n2. +1\n3. +2",  "3")
 Q2 = MCQuestions("What is releaed in beta minus decay",f"1. A netral bozon\n2. A negative bozon\n3. A positive boaon","2")
 Q3 = MCQuestions("What is not a neuclion?",f"1. A Protron\n2. A Neutron\n3. An Electron","3")
 Q4 = MCQuestions("Every Particle has an antiparticle?",f"1. True\n2. False","1")
@@ -49,16 +47,12 @@ Q5 = MCQuestions("What is the elctromagnetic force exchange particle?",f"1. Virt
 Q6 = MCQuestions("What is the weak force exchange particle?",f"1. Virtual photon\n2. W bozon\n3. Graviton","2")
 Q7 = MCQuestions("What does a kaon decay into?",f"1. Nothing\n2. Electron\n3. Pion","3")
 ###############################################################
-
-QuestionList = {
-    "1": Q1,
-    "2": Q2,
-    "3": Q3,
-    "4": Q4,
-    "5": Q5,
-    "6": Q6,
-    "7": Q7
-}
+QuestionList = []
+for item in data["Questions"]:
+    options = [item["Option1"],item["Option2"],item["Option3"]]
+    Qclass = MCQuestions(item["Question"],options,item["Answer"])
+    QuestionList.append(Qclass)
+###############################################################
 
 def Adding(Length,QuestionList,quiz):
     quest = []
