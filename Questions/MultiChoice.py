@@ -1,5 +1,6 @@
 import random
 import json
+import os
 from Users.AccountManagment import AddSaveData
 
 class MCQuestions:
@@ -28,11 +29,13 @@ class Quiz:
             print(q.Choices)
             Ans = input()
             if q.check(Ans) == True:# calls the function to check answer
-                print("Correct")
+                os.system("cls")
                 self.score += 1
+                print(f"Correct\nScore -",self.score)
             else:
-                print("Wrong")
-        print("Score was", self.score)
+                os.system("cls")
+                print(f"Wrong\nScore -",self.score)
+        print("Final score was", self.score)
         return(self.score)
 
 ######## Questions ############################################
@@ -64,6 +67,7 @@ def QuizStart(UserName):
     over = False #loop until over
     while over == False:
         try:
+            os.system("cls")
             Length = int(input(f"How many questions would you like 1-{len(QuestionList)}: ")) #lets user choose the length of the quiz
             Adding(Length,QuestionList,quiz)# adds length number of questions to the quiz
             Score = quiz.MultiChoiceStart(Length)# runs the quiz and stores the score
