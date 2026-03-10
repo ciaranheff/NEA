@@ -2,9 +2,6 @@ import random
 import json
 from Users.AccountManagment import AddSaveData
 
-with open("MultiQuestions.json","r") as f:
-    data = json.load(f)
-
 class MCQuestions:
     def __init__(self,Question,Choices,Answer):#crating OOP stuffs
         self.Question = Question
@@ -39,35 +36,30 @@ class Quiz:
         return(self.score)
 
 ######## Questions ############################################
-Q1 = MCQuestions("What relative charge does a alpha particle have?",    f"1. 0\n2. +1\n3. +2",  "3")
-Q2 = MCQuestions("What is releaed in beta minus decay",f"1. A netral bozon\n2. A negative bozon\n3. A positive boaon","2")
-Q3 = MCQuestions("What is not a neuclion?",f"1. A Protron\n2. A Neutron\n3. An Electron","3")
-Q4 = MCQuestions("Every Particle has an antiparticle?",f"1. True\n2. False","1")
-Q5 = MCQuestions("What is the elctromagnetic force exchange particle?",f"1. Virtual photon\n2. W bozon\n3. Graviton","1")
-Q6 = MCQuestions("What is the weak force exchange particle?",f"1. Virtual photon\n2. W bozon\n3. Graviton","2")
-Q7 = MCQuestions("What does a kaon decay into?",f"1. Nothing\n2. Electron\n3. Pion","3")
-###############################################################
-QuestionList = []
-for item in data["Questions"]:
-    options = [item["Option1"],item["Option2"],item["Option3"]]
-    Qclass = MCQuestions(item["Question"],options,item["Answer"])
-    QuestionList.append(Qclass)
+def MakeQuestionList(): #formats the json data correctly and resets list every time new quiz starts
+    with open("MultiQuestions.json","r") as f: #opens json file to read from
+        data = json.load(f)
+    f.close() #closes json file to allow for edditing inother functions
+    QuestionList = []
+    for i in data["Questions"]:
+        options = [i["Option1"] , i["Option2"] , i["Option3"]]
+        Qclass = MCQuestions(i["Question"],options,i["Answer"])
+        QuestionList.append(Qclass)
+    return QuestionList
+
 ###############################################################
 
 def Adding(Length,QuestionList,quiz):
-    quest = []
     questionsToAdd = []
-    for i in range (len(QuestionList)): #creates a list of all possible questions
-        quest.append(i+1)
     for i in range (Length):
-        which = random.randint(0,len(quest)-1) #chooses a random position from the list off remaining possible questions
-        what = str(quest[which]) #makes veriable for the name of the question
-        questionsToAdd.append(QuestionList[what])#adds the question to the list of questions to from the list of possible questions
-        quest.pop(which)# removes the option from the list of remaing questions
+        which = random.randint(0,len(QuestionList)-1) #chooses a random position from the list off remaining possible questions
+        questionsToAdd.append(QuestionList[which])#adds the question to the list of questions to from the list of possible questions
+        QuestionList.pop(which)# removes the option from the list of remaing questions
     for i in range(Length):
         quiz.NewQuestion(questionsToAdd[i-1])#calls the function to add the questions to the quiz
 
-def QuizStart(QuestionList,UserName):
+def QuizStart(UserName):
+    QuestionList = MakeQuestionList() # makes list of questions from the json file
     quiz = Quiz() #initiates the class in the name quiz
     over = False #loop until over
     while over == False:
