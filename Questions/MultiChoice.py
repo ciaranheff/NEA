@@ -23,7 +23,7 @@ class Quiz:
 
     def MultiChoiceStart(self,length):
         for i in range (length): 
-            q = self.Questions[i] #q= question called from the quiz class Questions
+            q = self.Questions[i] # q= question called from the quiz class Questions
             print(q.Question)
             print(q.Choices)
             Ans = input()
@@ -42,9 +42,9 @@ def MakeQuestionList(): #formats the json data correctly and resets list every t
     f.close() #closes json file to allow for edditing inother functions
     QuestionList = []
     for i in data["Questions"]:
-        options = [i["Option1"] , i["Option2"] , i["Option3"]]
-        Qclass = MCQuestions(i["Question"],options,i["Answer"])
-        QuestionList.append(Qclass)
+        options = [i["Option1"] , i["Option2"] , i["Option3"]] #makes each indervidual dictionary value into one veriable to be used in MCQuestions
+        Qclass = MCQuestions(i["Question"],options,i["Answer"])# Calls MCQuestions and uses the dictionary value of name veriable options from line above and the answer
+        QuestionList.append(Qclass) # Adds the new complete question class to the list of questions that are on the test
     return QuestionList
 
 ###############################################################
