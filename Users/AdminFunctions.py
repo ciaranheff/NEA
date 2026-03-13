@@ -1,6 +1,8 @@
 ########## Importing ############
 import os
 #################################
+import json
+#################################
 import Users.LogIn
 UL = Users.LogIn
 #################################
@@ -189,3 +191,27 @@ def AdminAccountManagment():
                 print("Could not find User")
         elif what == "9":
             return()
+
+#############################################################################
+
+def EdditingQuestionsMenus():
+    while True:
+        what = input(f"---Question Edditing---\nWhat are you edditing\n1. Exam questions\n2. Multichoice questions\n9. Exit")
+        if what == '1':
+            pass
+        elif what == '2':
+            pass
+        elif what == '3':
+            return()
+        else:
+            os.system("cls")
+
+def ExamQuestions():
+    pass
+
+def Multichoice():
+    with open("MultiQuestions.json","r") as f: #opens json file to read from
+        data = json.load(f)
+    f.close() #closes json file to allow for edditing inother functions
+    for i in data["Questions"]:
+        pass

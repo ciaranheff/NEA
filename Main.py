@@ -39,12 +39,14 @@ def Login(): # Log in for users (lowest level)
 
 def AdminHomeScreen(User):
     while True:
-        ans = input(f"---Admin Menu---\n1. Results Search\n2. Manage Users\n9. Exit\n")
+        ans = input(f"---Admin Menu---\n1. Results Search\n2. Manage Users\n3. Question Edditing\n9. Exit\n")
         if ans == '1':
             os.system("cls")
             UAF.AdminResultsSearch()
         elif ans == '2':
             UAF.AdminAccountManagment()
+        elif ans == '3':
+            UAF.EdditingQuestionsMenus()
         elif ans == '9':
             os.system("cls")
             print("Good Bye")
