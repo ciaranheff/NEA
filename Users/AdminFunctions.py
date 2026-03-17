@@ -70,7 +70,7 @@ def UserSpecific():
             os.system("cls")
             return()
         elif UL.CheckForUser(who) == True: # makes sure user exsists
-            what = input(f"---{who}---\n1. All Data \n2. Minimal data \n3. User Stats\n4. MultiChoice\n9. Return\n")
+            what = input(f"---{who}---\n1. All Data \n2. Topic data \n3. Topic Stats\n4. MultiChoice\n9. Return\n")
             os.system("cls")
 
             if what == '1': #all data
@@ -200,8 +200,9 @@ def EdditingQuestionsMenus():
         if what == '1':
             pass
         elif what == '2':
-            pass
-        elif what == '3':
+            os.system("cls")
+            DisplayMultiChoice()
+        elif what == '9':
             return()
         else:
             os.system("cls")
@@ -209,9 +210,17 @@ def EdditingQuestionsMenus():
 def ExamQuestions():
     pass
 
-def Multichoice():
+def DisplayMultiChoice():
+    edditchoice = []
     with open("MultiQuestions.json","r") as f: #opens json file to read from
         data = json.load(f)
     f.close() #closes json file to allow for edditing inother functions
-    for i in data["Questions"]:
-        pass
+    for i in data["Questions"]: #calls for every dictionary entry
+        question_name = (i["Question"]) #gets the dictionary value for i's Question name
+        question_number = (i["Number"])#gets the dictionary value for i's Question id
+        stuff = [question_name,question_number]
+        edditchoice.append(stuff) #makes list of values
+    print("Question - Question ID")
+    for i in edditchoice:
+        print(i)
+

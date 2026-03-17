@@ -10,8 +10,8 @@ import Users.AdminFunctions
 UAF = Users.AdminFunctions
 #################################
 from Questions.MultiChoice import QuizStart
-#from Questions.MultiChoice import QuestionList
-######### Fuctions #############
+#################################
+from Questions.Topic import TopicMenu
 ################################
 def Login(): # Log in for users (lowest level)
     userfound = False
@@ -28,7 +28,7 @@ def Login(): # Log in for users (lowest level)
             password = input("What is your password ")
             if UL.CheckPassword(User,password) == True:
                 Admin = UL.CheckAdmin(User)
-                os.system("cls") # clears screen to prevent clutter
+                #os.system("cls") # clears screen to prevent clutter
                 return (User,Admin)
             else:
                 print("wrong password",i+1,"/ 3") #shows number of password attemtps left
@@ -57,12 +57,14 @@ def AdminHomeScreen(User):
 
 def HomeScreen(User):
     while True:
-        ans = input(f"---Main Menu---\n1.Topic selection\n2.Multichoice\n3.Exit\n")
+        ans = input(f"---Main Menu---\n1.Topic selection\n2.Multichoice\n9.Exit\n")
         if ans == "1":
-            pass
+            TopicMenu(User)
         elif ans == "2":
             QuizStart(User)
         elif ans == "3":
+            pass
+        elif ans == "9":
             os.system("cls")
             print("Good Bye")
             return()
