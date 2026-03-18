@@ -59,6 +59,7 @@ def HomeScreen(User):
     while True:
         ans = input(f"---Main Menu---\n1.Topic selection\n2.Multichoice\n9.Exit\n")
         if ans == "1":
+            os.system("cls")
             TopicMenu(User)
         elif ans == "2":
             QuizStart(User)
