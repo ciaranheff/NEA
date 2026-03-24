@@ -1,7 +1,7 @@
 import random
 import json
 import os
-from Users.AccountManagment import AddSaveData
+from Users.AccountManagment import AddMultiSaveData
 
 class MCQuestions:
     def __init__(self,Question,Choices,Answer):#crating OOP stuffs
@@ -71,7 +71,7 @@ def QuizStart(UserName):
             Length = int(input(f"How many questions would you like 1-{len(QuestionList)}: ")) #lets user choose the length of the quiz
             Adding(Length,QuestionList,quiz)# adds length number of questions to the quiz
             Score = quiz.MultiChoiceStart(Length)# runs the quiz and stores the score
-            AddSaveData(UserName,Score,Length) #Saves the data to MultiChoice database
+            AddMultiSaveData(UserName,Score,Length) #Saves the data to MultiChoice database
             over = True #breaks loop
         except: # error catches if input is not a int
             print("Enter a number in the range")

@@ -77,6 +77,12 @@ def CorrectSubject(Subject):
     results = cursor.fetchall()
     return results
 
+def AddTopicSaveData(UserName,Topic,Correct):
+    cursor.execute("INSERT INTO SaveData (UserName,Topic,Correct) VALUES (?,?,?)" , (UserName,Topic,Correct))
+    connection.commit()
+    
+################################# MultiChoice Tables ########################
+
 def UserMultiChoice(Name):
     cursor.execute("SELECT * FROM MultiChoice WHERE UserName = ?", (Name,))
     results = cursor.fetchall()
@@ -87,6 +93,6 @@ def MultiChoiceSaveData():
     results = cursor.fetchall()
     return results
 
-def AddSaveData(UserName,Score,Total):
+def AddMultiSaveData(UserName,Score,Total):
     cursor.execute("INSERT INTO MultiChoice (UserName,Score,Total) VALUES (?,?,?)" , (UserName,Score,Total,)) # adds new Savedata
     connection.commit()

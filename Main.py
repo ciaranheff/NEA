@@ -1,4 +1,5 @@
-# @@@ = come back to at the end
+# User1 password = 1234 
+# Admin password = password
 ######### Importing ##############
 import os
 import time
@@ -13,9 +14,12 @@ from Questions.MultiChoice import QuizStart
 #################################
 from Questions.Topic import TopicMenu
 ################################
+
 def Login(): # Log in for users (lowest level)
     userfound = False
-    print(UL.GetUserNames()) #reformat to make look pretty @@@
+    names = (UL.GetUserNames()) 
+    for i in names:
+        print(i)
     while userfound == False:
         User = input("What is your user name ") 
         if UL.CheckForUser(User) == True: #checks to see if user exisits
@@ -37,7 +41,7 @@ def Login(): # Log in for users (lowest level)
         os.system("cls") # clears screen to prevent clutter
         Login() # loops back to the start of the function
 
-def AdminHomeScreen(User):
+def AdminHomeScreen(User): # For admins
     while True:
         ans = input(f"---Admin Menu---\n1. Results Search\n2. Manage Users\n3. Question Edditing\n9. Exit\n")
         if ans == '1':
@@ -55,7 +59,7 @@ def AdminHomeScreen(User):
             os.system("cls")
             print("invalid input ")
 
-def HomeScreen(User):
+def HomeScreen(User): # For Users
     while True:
         ans = input(f"---Main Menu---\n1.Topic selection\n2.Multichoice\n9.Exit\n")
         if ans == "1":

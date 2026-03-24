@@ -1,9 +1,9 @@
 ########## Importing ############
 import os
-#################################
 import json
-#################################
 import math
+########## Functions ##############
+from Users.AccountManagment import AddTopicSaveData
 
 class TopicQuestions:
     def __init__(self,Topic,Question,Answer,Number):#crating OOP stuffs
@@ -12,9 +12,11 @@ class TopicQuestions:
         self.Answer = Answer
         self.Number = Number
     def check(self,AnserGiven):
-        if self.Answer == AnserGiven: #checks to see if answer given is correct
+        if self.Answer.lower() == AnserGiven.lower(): #checks to see if answer given is correct
+            print("Correct")
             return(True)
         else:
+            print("Incorrect")
             return(False)
 
 def MakeQuestionList(): #formats the json data correctly and resets list every time new quiz starts
@@ -37,7 +39,9 @@ def TopicMenu(User):
     QuestionList,Topics = MakeQuestionList()
     while True:
         print(Topics)
-        What = input("What topic would you like to do? - ")
+        What = input("What topic would you like to do (enter 'exit' to exit) - ")
+        if What.lower().strip() == "exit":
+            break
         for i in Topics:
             if What.lower().strip() == i.lower(): #compairs the word input with the topic name by making both inputs lower case and removing any empty space with strip
                 os.system("cls")
@@ -45,8 +49,18 @@ def TopicMenu(User):
                 for i in QuestionList: # liniar search for items with the topic class of veriable What
                     if What.lower().strip() == i.Topic.lower():
                         print(i.Question,i.Number)
-            
-        
+                try: #makes sure user input is a number
+                    Quest = int(input("What question Number would you like to do - ")) # gets the user to input the questoin number they want to do
+                except:
+                    Quest = ""
+                    print("invalid number input")
+                for i in QuestionList:
+                    if Quest == i.Number:
+                        Correct = (QuestionChosen(i))
+                        AddTopicSaveData(User,i.Topic,Correct)
 
-def TopicChosen(User):
-    pass
+def QuestionChosen(i):
+    print(i.Question)
+    ans = (input("")).lower()
+    Correct = i.check(ans) #calls the class function check which prints if its correct for the user and returns a boolean output
+    return(Correct)
