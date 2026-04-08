@@ -10,8 +10,6 @@ import Users.AccountManagment
 UA = Users.AccountManagment
 #################################
 
-Subjects = ['A']
-
 def KeepIn(): # Function to wait for admin to read data before clearing the screen
     out = False
     while out == False:
@@ -223,4 +221,8 @@ def DisplayMultiChoice():
     print("Question - Question ID")
     for i in edditchoice:
         print(i)
+    which = int(input("What question number would you like to edit"))
+    for i in edditchoice:
+        if which == i[1]:
+            print("This question", i)
 
