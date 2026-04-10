@@ -134,7 +134,7 @@ def PercentageCorrect(who):
             totalpercent = float((score/total) * 100)
     else:
         totalpercent = 'NA'
-    percentlist.append('Total',totalpercent)
+    percentlist.append(['Total',totalpercent])
     #### Topic ####
     Topics = GetTopics()
     for i in Topics:
@@ -151,7 +151,7 @@ def PercentageCorrect(who):
                 topicpercent = float((score/total)* 100)
         else:
             topicpercent = 'NA'
-        percentlist.append(i,topicpercent)
+        percentlist.append([i,topicpercent])
     print(percentlist)
     return percentlist
 
