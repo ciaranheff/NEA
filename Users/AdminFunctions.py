@@ -9,12 +9,26 @@ UL = Users.LogIn
 import Users.AccountManagment
 UA = Users.AccountManagment
 #################################
+from Questions.Topic import MakeQuestionList
+QuestionList,Subjects = MakeQuestionList()
 
 def KeepIn(): # Function to wait for admin to read data before clearing the screen
     out = False
     while out == False:
         out = input("Enter any key to escape")
     os.system("cls") # clears screen to declutter
+
+def GetTopics(): #formats the json data correctly and resets list every time new quiz starts
+    Topics = []
+    ##### json handling
+    with open("TopicQuestions.json","r") as f: #opens json file to read from
+        data = json.load(f)
+    f.close() #closes json file to allow for edditing inother functions
+    #####
+    for i in data["Questions"]:
+        if (i["Topic"]) not in Topics:#makes a list of all topics by making a list of topics which have already come up and seeing if the current topic value is new or not
+            Topics.append(i["Topic"])
+    return Topics
 
 def AdminResultsSearch():
     while True:
@@ -42,7 +56,7 @@ def AdminResultsSearch():
             else:
                 print("invalid respone")
 
-def TopicSpecific():
+def TopicSpecific():##############
     while True:
         print(f"{Subjects}\nWhat Subject would you like to see (press enter to exit)")
         what = input()
@@ -51,7 +65,7 @@ def TopicSpecific():
         else:
             All = UA.CorrectSubject(what)
             if All != []:
-                print("Attempt Number - User - Topic - Remake code - Answer given - Correct")
+                print("Attempt Number - User - Topic - Correct")
                 for i in range(len(All)):
                     print(All[i-1])
                 KeepIn()
@@ -79,8 +93,8 @@ def UserSpecific():
                 KeepIn()
 
             elif what == '2':# Minmal data
-                print("Answer Correct - Topic")
-                results = (UA.UserQuestion(who)) #retreaves (answer given correct answer and remakecode) from database @@@ change temp1 to 'who'
+                print("Atempt Number - Answer Correct - Topic")
+                results = (UA.UserQuestion(who)) #retreaves 
                 for i in range (len(results)): #prints each entry on a new line
                     print(results[i])
                 KeepIn()
@@ -105,33 +119,42 @@ def UserSpecific():
             print("No user Found")
 
 def PercentageCorrect(who):
-    Percentages = [] # list of all percentages
-    ################## Works out All subjects ###########################
-    list = UA.UserCorrectAll(who) # finds all answers for a user
-    correct = 0
-    total = len(list)
-    for i in range (total):
-        if (list[i]) == ('Y',): #checks to see if any given answer is correct
-            correct += 1
-    try:
-        totalpercent = float((correct/total)*100) #finds percentage correct
-    except: # error catch for when someone has not done a subject question to prevent 0 devision
+    percentlist = []
+    #### Total ####
+    data = UA.UserCorrectAll(who)
+    score = 0
+    total = len(data)
+    for i in data:
+        if i[0] == 1:
+            score += 1
+    if total != 0:
+        if score == 0:
+            totalpercent = 0
+        else:
+            totalpercent = float((score/total) * 100)
+    else:
         totalpercent = 'NA'
-    Percentages.append(('total',totalpercent)) # adds percentage correct and subect to the percentages list
-    ################### Works out subject specific ################
-    for i in range (len(Subjects)): # for each subject do the loop
-        list = UA.UserCorrectSubject(who,(Subjects[i-1])) # finds answers given for any given subject
-        correct = 0
-        total = len(list)
-        for i in range (total):
-            if (list[i]) == ('Y',): #checks to see if any given answer is correct
-                correct += 1
-        try:
-            percent = float((correct/total)*100) #finds percentage correct
-        except: # error catch for when someone has not done a subject question to prevent 0 devision
-            percent = 'NA'
-        Percentages.append((Subjects,percent)) # adds percentage correct and subect to the percentages list
-    return(Percentages) # returns the subject list
+    percentlist.append('Total',totalpercent)
+    #### Topic ####
+    Topics = GetTopics()
+    for i in Topics:
+        score = 0
+        data = UA.UserCorrectSubject(who,i)
+        total = len(data)
+        for j in data:
+            if j[0] == 1:
+                score += 1
+        if total != 0:
+            if score == 0:
+                topicpercent = 0
+            else:
+                topicpercent = float((score/total)* 100)
+        else:
+            topicpercent = 'NA'
+        percentlist.append(i,topicpercent)
+    print(percentlist)
+    return percentlist
+
 
 #############################################################
 
@@ -180,7 +203,7 @@ def AdminAccountManagment():
             if UL.CheckForUser(who) == True:
                 admin = False
                 while admin != "Y" and admin != "N": #makes sure the admin status is either Y or N
-                    admin = input("Is this user an admin Y/N ")
+                    admin = input("Do you want to make this user an admin Y/N ").upper()
                 UA.AdminChange(who,admin)
                 os.system("cls")
                 print(f"{who} admin status changed to '{admin}'")
@@ -221,7 +244,7 @@ def DisplayMultiChoice():
     print("Question - Question ID")
     for i in edditchoice:
         print(i)
-    which = int(input("What question number would you like to edit"))
+    which = int(input("What question number would you like to edit "))
     for i in edditchoice:
         if which == i[1]:
             print("This question", i)

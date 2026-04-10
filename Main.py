@@ -1,5 +1,5 @@
 # User1 password = 1234 
-# Admin password = password
+# Admin password = pppp
 ######### Importing ##############
 import os
 import time
@@ -39,7 +39,7 @@ def Login(): # Log in for users (lowest level)
         print("Too many wrong attempts")
         time.sleep(1) # gives 1 second to read error message to prevent confusion
         os.system("cls") # clears screen to prevent clutter
-        Login() # loops back to the start of the function
+        return Login() # loops back to the start of the function
 
 def AdminHomeScreen(User): # For admins
     while True:
@@ -51,6 +51,9 @@ def AdminHomeScreen(User): # For admins
             UAF.AdminAccountManagment()
         elif ans == '3':
             UAF.EdditingQuestionsMenus()
+        elif ans == '5':
+            os.system("cls")
+            UAF.PercentageCorrect('User1')
         elif ans == '9':
             os.system("cls")
             print("Good Bye")

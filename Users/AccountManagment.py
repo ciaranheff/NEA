@@ -28,7 +28,7 @@ def DeleteUser(Name):
 
 
 def PasswordChange(Name,NewPassword):
-    Password = Hashing(Password)
+    NewPassword = Hashing(NewPassword)
     cursor.execute("UPDATE Users SET Password = ? WHERE UserName = ?" , (NewPassword,Name,))
     connection.commit()
 
@@ -58,7 +58,7 @@ def UserAll(Name): # gets all user specific from Savedata
     return results
 
 def UserQuestion(Name): #need to change quotation marks around as colum names need it when more than 1 word long (in the exacute part)
-    cursor.execute('SELECT Correct , "Topic" FROM SaveData WHERE UserName = ?', (Name,))
+    cursor.execute('SELECT "Attempt Number" , Correct , "Topic" FROM SaveData WHERE UserName = ?', (Name,))
     results = cursor.fetchall()
     return results
 
