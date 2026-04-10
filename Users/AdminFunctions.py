@@ -54,6 +54,7 @@ def AdminResultsSearch():
                 os.system("cls")
                 return()
             else:
+                os.system("cls")
                 print("invalid respone")
 
 def TopicSpecific():##############
@@ -82,39 +83,40 @@ def UserSpecific():
             os.system("cls")
             return()
         elif UL.CheckForUser(who) == True: # makes sure user exsists
-            what = input(f"---{who}---\n1. All Data \n2. Topic data \n3. Topic Stats\n4. MultiChoice\n9. Return\n")
-            os.system("cls")
-
-            if what == '1': #all data
-                print("Data points here")
-                results = (UA.UserAll(who)) #retreaves all data raw from database
-                for i in range (len(results)): #prints each entry on a new line
-                    print(results[i])
-                KeepIn()
-
-            elif what == '2':# Minmal data
-                print("Atempt Number - Answer Correct - Topic")
-                results = (UA.UserQuestion(who)) #retreaves 
-                for i in range (len(results)): #prints each entry on a new line
-                    print(results[i])
-                KeepIn()
-
-            elif what == '3': #Stats
-                persent = PercentageCorrect(who)
-                for i in range (len(persent)):
-                    print(persent[i-1])
-                KeepIn()
-
-            elif what == '4':
-                print("Data points here")
-                results = UA.UserMultiChoice(who)
-                for i in range (len(results)): #prints each entry on a new line
-                    print(results[i])
-                KeepIn()
-
-            elif what == '9': #Exit
+            while True:
+                what = input(f"---{who}---\n1. All Data \n2. Topic data \n3. Topic Stats\n4. MultiChoice\n9. Return\n")
                 os.system("cls")
-                return()
+
+                if what == '1': #all data
+                    print("Data points here")
+                    results = (UA.UserAll(who)) #retreaves all data raw from database
+                    for i in range (len(results)): #prints each entry on a new line
+                        print(results[i])
+                    KeepIn()
+
+                elif what == '2':# Minmal data
+                    print("Atempt Number - Answer Correct - Topic")
+                    results = (UA.UserQuestion(who)) #retreaves 
+                    for i in range (len(results)): #prints each entry on a new line
+                        print(results[i])
+                    KeepIn()
+
+                elif what == '3': #Stats
+                    persent = PercentageCorrect(who)
+                    for i in persent:
+                        print(i)
+                    KeepIn()
+
+                elif what == '4':
+                    print("Data points here")
+                    results = UA.UserMultiChoice(who)
+                    for i in range (len(results)): #prints each entry on a new line
+                        print(results[i])
+                    KeepIn()
+
+                elif what == '9': #Exit
+                    os.system("cls")
+                    return()
         else: # catch for when user does not exisit
             print("No user Found")
 
@@ -152,12 +154,18 @@ def PercentageCorrect(who):
         else:
             topicpercent = 'NA'
         percentlist.append([i,topicpercent])
-    print(percentlist)
     return percentlist
 
 
 #############################################################
-
+def ValidPassword():
+    validpassword = False
+    while validpassword == False:
+        password = input("What is the password (must be 3 or more characters long) ").strip()
+        if len(password) >= 3:
+            validpassword = True
+    return password
+    
 def AdminAccountManagment():
     while True:
         print(f"---Account Managment--- \n1.Show All User Data\n2.Delete User\n3.Add User\n4.Change Password\n5.Change Admin Status\n9.Exit")
@@ -173,7 +181,7 @@ def AdminAccountManagment():
             print(UL.GetUserNames())
             who = input("Who's account do you want to delete?: ")
             if UL.CheckForUser(who) == True:
-                check = input("Are you sure (Y)") # double checking they want to delete the user
+                check = input("Are you sure (Y)").upper() # double checking they want to delete the user
                 if check == "Y":
                     UA.DeleteUser(who)
                     print(f"{who} has been deleted")
@@ -182,15 +190,15 @@ def AdminAccountManagment():
                 print("Could not find user")
         elif what == "3": # add new User
             name = input("What is the Username ")
-            password = input("What is the password ")
-            admin = input("Is the User an Admin Y/N (case sensative) ")
+            password = ValidPassword()
+            admin = input("Is the User an Admin Y/N ").upper()
             os.system("cls")
             UA.AddUser(name,password,admin)
         elif what == "4": #Change User password
             print(UL.GetUserNames())
             who = input("Who's Password do you want to change ")
             if UL.CheckForUser(who) == True:
-                newpass = input("What is the new password ")
+                newpass = ValidPassword()
                 UA.PasswordChange(who,newpass)
                 os.system("cls")
                 print(f"{who}'s password changed to {newpass}")
@@ -244,7 +252,7 @@ def DisplayMultiChoice():
     print("Question - Question ID")
     for i in edditchoice:
         print(i)
-    which = int(input("What question number would you like to edit "))
+    which = int(input("What question ID number would you like to edit "))
     for i in edditchoice:
         if which == i[1]:
             print("This question", i)

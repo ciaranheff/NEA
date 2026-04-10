@@ -39,8 +39,9 @@ def TopicMenu(User):
     QuestionList,Topics = MakeQuestionList()
     while True:
         print(Topics)
-        What = input("What topic would you like to do (enter 'exit' to exit) - ")
-        if What.lower().strip() == "exit":
+        What = input("What topic would you like to do (press enter to exit) - ")
+        if What.strip() == "":
+            os.system("cls")
             break
         for i in Topics:
             if What.lower().strip() == i.lower(): #compairs the word input with the topic name by making both inputs lower case and removing any empty space with strip
@@ -55,7 +56,7 @@ def TopicMenu(User):
                     Quest = ""
                     print("invalid number input")
                 for i in QuestionList:
-                    if Quest == i.Number:
+                    if Quest == i.Number and i.Topic == What:
                         Correct = (QuestionChosen(i))
                         AddTopicSaveData(User,i.Topic,Correct)
 
