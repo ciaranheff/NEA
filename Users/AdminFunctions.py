@@ -59,6 +59,7 @@ def AdminResultsSearch():
 
 def TopicSpecific():##############
     while True:
+        QuestionList,Subjects = MakeQuestionList()
         print(f"{Subjects}\nWhat Subject would you like to see (press enter to exit)")
         what = input()
         if what == "":
@@ -71,7 +72,7 @@ def TopicSpecific():##############
                     print(All[i-1])
                 KeepIn()
             else:
-                print("Could not find Topic")
+                print("No data to be displayed")
                 return()
 
 def UserSpecific():
@@ -156,7 +157,6 @@ def PercentageCorrect(who):
         percentlist.append([i,topicpercent])
     return percentlist
 
-
 #############################################################
 def ValidPassword():
     validpassword = False
@@ -225,19 +225,53 @@ def AdminAccountManagment():
 
 def EdditingQuestionsMenus():
     while True:
-        what = input(f"---Question Edditing---\nWhat are you edditing\n1. Exam questions\n2. Multichoice questions\n9. Exit")
+        what = input(f"---Question Edditing---\nWhat are you edditing\n1. Exam questions\n2. Multichoice questions\n3. New Topic Question\n4. New Multichoice question\n9. Exit\n")
         if what == '1':
-            pass
+            ExamQuestions()
         elif what == '2':
             os.system("cls")
             DisplayMultiChoice()
+        elif what == '3':
+            NewTopic()
+        elif what == '4':
+            NewMulti()
         elif what == '9':
+            os.system("cls")
             return()
         else:
             os.system("cls")
 
 def ExamQuestions():
-    pass
+    edditchoice = []
+    with open("TopicQuestions.json","r") as f: #opens json file to read from
+        data = json.load(f)
+    f.close() #closes json file to allow for edditing inother functions
+    for i in data["Questions"]: #calls for every dictionary entry
+        question_name = (i["Question"]) #gets the dictionary value for i's Question name
+        question_number = (i["Number"])#gets the dictionary value for i's Question id
+        stuff = [question_name,question_number]
+        edditchoice.append(stuff) #makes list of values
+    print("Question - Question ID")
+    for i in edditchoice:
+        print(i)
+    which = int(input("What question ID number would you like to edit "))
+    for i in data["Questions"]:
+        if which == i["Number"]:
+            os.system("cls")
+            what = input(f"What would you like to edit\n1.Question\n2.Answer\n3.Topic ")
+            if what == "1":
+                change = input("What is the new question ")
+                i["Question"] = change
+            if what == "2":
+                change = input("What is the new Answer ")
+                i["Answer"] = change
+            if what == "3":
+                change = input("What is the new Topic ")
+                i["Topic"] = change
+    with open ("TopicQuestions.json","w") as f:
+        json.dump(data,f, indent=4)
+    f.close()
+    os.system("cls")
 
 def DisplayMultiChoice():
     edditchoice = []
@@ -253,7 +287,71 @@ def DisplayMultiChoice():
     for i in edditchoice:
         print(i)
     which = int(input("What question ID number would you like to edit "))
-    for i in edditchoice:
-        if which == i[1]:
-            print("This question", i)
+    for i in data["Questions"]:
+        if which == i["Number"]:
+            what = input(f"What would you like to edit\n1.Question\n2.Answers ")
+            if what == "1":
+                change = input("What is the new question ")
+                i["Question"] = change
+            if what == "2":
+                print("Option 1 -",i["Option1"])
+                print("Option 2 -",i["Option2"])
+                print("Option 3 -",i["Option3"])
+                num = input("What Option would you like to edit 1-3 ")
+                change = input("What is the new option")
+                if num == '1':
+                    i["Option1"] = change
+                elif num == '2':
+                    i["Option2"] = change
+                elif num == '3':
+                    i["Option3"] = change
+                else:
+                    print("Not vaild input")
+    with open ("MultiQuestions.json","w") as f:
+        json.dump(data,f, indent=4)
+    f.close()
+    os.system("cls")
 
+def NewTopic():
+    with open("TopicQuestions.json","r") as f: #opens json file to read from
+        data = json.load(f)
+    f.close() #closes json file to allow for edditing inother functions
+    QuestionNumber = max(i["Number"] for i in data["Questions"]) + 1 #goes through all current numbers in dictionary and retreves the largest value and add 1 to incriment and ensure unique id's
+    Topic = input("What is the Topic ")
+    Question = input(f"What is the Question\n")
+    Answer = input("What is the answer ")
+    NewQuestion = {
+        "Number": QuestionNumber,
+        "Topic": Topic,
+        "Question": Question,
+        "Answer": Answer
+    }
+    data["Questions"].append(NewQuestion)
+    with open ("TopicQuestions.json","w") as f:
+        json.dump(data,f, indent=4)
+    f.close()
+    os.system("cls")
+
+def NewMulti():
+    with open("MultiQuestions.json","r") as f: #opens json file to read from
+        data = json.load(f)
+    f.close() #closes json file to allow for edditing inother functions
+    QuestionNumber = max(i["Number"] for i in data["Questions"]) + 1 #goes through all current numbers in dictionary and retreves the largest value and add 1 to incriment and ensure unique id's
+    Question = input(f"What is the Question\n")
+    Answer1 = input("What is the 1st option ")
+    Answer2 = input("What is the 2nd option ")
+    Answer3 = input("What is the 3rd option ")
+    Answer = input("What is the answer ")
+    NewQuestion = {
+        "Number": QuestionNumber,
+        "Question": Question,
+        "Option1": Answer1,
+        "Option2": Answer2,
+        "Option3": Answer3,
+        "Answer": Answer
+    }
+    data["Questions"].append(NewQuestion)
+    with open ("MultiQuestions.json","w") as f:
+        json.dump(data,f, indent=4)
+    f.close()
+    os.system("cls")
