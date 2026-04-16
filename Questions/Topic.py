@@ -54,6 +54,7 @@ def TopicMenu(User):
                     Quest = int(input("What question Number would you like to do - ")) # gets the user to input the questoin number they want to do
                 except:
                     Quest = ""
+                    os.system("cls")
                     print("invalid number input")
                 for i in QuestionList:
                     if Quest == i.Number and i.Topic == What:

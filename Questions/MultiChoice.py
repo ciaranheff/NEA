@@ -62,16 +62,20 @@ def Adding(Length,QuestionList,quiz):
         quiz.NewQuestion(questionsToAdd[i-1])#calls the function to add the questions to the quiz
 
 def QuizStart(UserName):
+    Length = -1
     QuestionList = MakeQuestionList() # makes list of questions from the json file
     quiz = Quiz() #initiates the class in the name quiz
     over = False #loop until over
+    os.system("cls")
     while over == False:
         try:
-            os.system("cls")
-            Length = int(input(f"How many questions would you like 1-{len(QuestionList)}: ")) #lets user choose the length of the quiz
+            while Length < 0:
+                Length = int(input(f"How many questions would you like 1-{len(QuestionList)}: ")) #lets user choose the length of the quiz
             Adding(Length,QuestionList,quiz)# adds length number of questions to the quiz
             Score = quiz.MultiChoiceStart(Length)# runs the quiz and stores the score
             AddMultiSaveData(UserName,Score,Length) #Saves the data to MultiChoice database
             over = True #breaks loop
         except: # error catches if input is not a int
+            os.system("cls")
+            QuestionList = MakeQuestionList()
             print("Enter a number in the range")

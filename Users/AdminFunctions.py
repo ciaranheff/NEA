@@ -38,6 +38,7 @@ def AdminResultsSearch():
                 os.system("cls") # clears screen
                 UserSpecific()
             elif ans == '2':
+                os.system("cls")
                 TopicSpecific()
             elif ans == '3':
                 os.system("cls")
@@ -63,6 +64,7 @@ def TopicSpecific():##############
         print(f"{Subjects}\nWhat Subject would you like to see (press enter to exit)")
         what = input()
         if what == "":
+            os.system("cls")
             return()
         else:
             All = UA.CorrectSubject(what)
@@ -72,6 +74,7 @@ def TopicSpecific():##############
                     print(All[i-1])
                 KeepIn()
             else:
+                os.system("cls")
                 print("No data to be displayed")
                 return()
 
@@ -109,7 +112,7 @@ def UserSpecific():
                     KeepIn()
 
                 elif what == '4':
-                    print("Data points here")
+                    print("Attempt Number - User - Number Correct - Total")
                     results = UA.UserMultiChoice(who)
                     for i in range (len(results)): #prints each entry on a new line
                         print(results[i])
@@ -165,6 +168,18 @@ def ValidPassword():
         if len(password) >= 3:
             validpassword = True
     return password
+
+def ValidName():
+    validname = False
+    count = 0
+    while validname == False and count != 3:
+        name = input("What is the username (must be 3 or more characters long) ").strip()
+        if len(name) >= 3:
+            validname = True
+        else:
+            count +=1
+    return name,validname
+
     
 def AdminAccountManagment():
     while True:
@@ -187,13 +202,21 @@ def AdminAccountManagment():
                     print(f"{who} has been deleted")
                     KeepIn()
             else:
+                os.system("cls")
                 print("Could not find user")
         elif what == "3": # add new User
-            name = input("What is the Username ")
-            password = ValidPassword()
-            admin = input("Is the User an Admin Y/N ").upper()
-            os.system("cls")
-            UA.AddUser(name,password,admin)
+            leave = False
+            while leave == False:
+                name,valid = ValidName()
+                if valid == False:
+                    os.system("cls")
+                    break
+                password = ValidPassword()
+                while admin != 'Y' or admin != 'N':
+                    admin = input("Is the User an Admin Y/N ").upper()
+                os.system("cls")
+                UA.AddUser(name,password,admin)
+                leave = True
         elif what == "4": #Change User password
             print(UL.GetUserNames())
             who = input("Who's Password do you want to change ")
@@ -227,13 +250,16 @@ def EdditingQuestionsMenus():
     while True:
         what = input(f"---Question Edditing---\nWhat are you edditing\n1. Exam questions\n2. Multichoice questions\n3. New Topic Question\n4. New Multichoice question\n9. Exit\n")
         if what == '1':
+            os.system("cls")
             ExamQuestions()
         elif what == '2':
             os.system("cls")
             DisplayMultiChoice()
         elif what == '3':
+            os.system("cls")
             NewTopic()
         elif what == '4':
+            os.system("cls")
             NewMulti()
         elif what == '9':
             os.system("cls")
@@ -254,7 +280,13 @@ def ExamQuestions():
     print("Question - Question ID")
     for i in edditchoice:
         print(i)
-    which = int(input("What question ID number would you like to edit "))
+    which = (input("What question ID number would you like to edit "))
+    try:
+        which = int(which)
+    except:
+        os.system("cls")
+        print("invalid input")
+        return()
     for i in data["Questions"]:
         if which == i["Number"]:
             os.system("cls")
@@ -286,7 +318,13 @@ def DisplayMultiChoice():
     print("Question - Question ID")
     for i in edditchoice:
         print(i)
-    which = int(input("What question ID number would you like to edit "))
+    which = (input("What question ID number would you like to edit "))
+    try:
+        which = int(which)
+    except:
+        os.system("cls")
+        print("invalid input")
+        return()
     for i in data["Questions"]:
         if which == i["Number"]:
             what = input(f"What would you like to edit\n1.Question\n2.Answers ")

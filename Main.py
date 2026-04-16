@@ -54,8 +54,10 @@ def AdminHomeScreen(User): # For admins
             os.system("cls")
             UAF.AdminResultsSearch()
         elif ans == '2':
+            os.system("cls")
             UAF.AdminAccountManagment()
         elif ans == '3':
+            os.system("cls")
             UAF.EdditingQuestionsMenus()
         elif ans == '5':
             os.system("cls")
