@@ -245,6 +245,11 @@ def AdminAccountManagment():
             return()
 
 #############################################################################
+def ValidInput():
+    Uin = ""
+    while Uin == "":
+        Uin = input("--")
+    return(Uin)
 
 def EdditingQuestionsMenus():
     while True:
@@ -292,13 +297,16 @@ def ExamQuestions():
             os.system("cls")
             what = input(f"What would you like to edit\n1.Question\n2.Answer\n3.Topic ")
             if what == "1":
-                change = input("What is the new question ")
+                print("What is the new question ")
+                change = ValidInput()
                 i["Question"] = change
             if what == "2":
-                change = input("What is the new Answer ")
+                print("What is the new Answer ")
+                change = ValidInput()
                 i["Answer"] = change
             if what == "3":
-                change = input("What is the new Topic ")
+                print("What is the new Topic ")
+                change = ValidInput()
                 i["Topic"] = change
     with open ("TopicQuestions.json","w") as f:
         json.dump(data,f, indent=4)
@@ -336,7 +344,8 @@ def DisplayMultiChoice():
                 print("Option 2 -",i["Option2"])
                 print("Option 3 -",i["Option3"])
                 num = input("What Option would you like to edit 1-3 ")
-                change = input("What is the new option")
+                print("What is the new option")
+                change = ValidInput()
                 if num == '1':
                     i["Option1"] = change
                 elif num == '2':
@@ -355,9 +364,12 @@ def NewTopic():
         data = json.load(f)
     f.close() #closes json file to allow for edditing inother functions
     QuestionNumber = max(i["Number"] for i in data["Questions"]) + 1 #goes through all current numbers in dictionary and retreves the largest value and add 1 to incriment and ensure unique id's
-    Topic = input("What is the Topic ")
-    Question = input(f"What is the Question\n")
-    Answer = input("What is the answer ")
+    print("What is the Topic ")
+    Topic = ValidInput()
+    print(f"What is the Question\n")
+    Question = ValidInput()
+    print("What is the answer ")
+    Answer = ValidInput()
     NewQuestion = {
         "Number": QuestionNumber,
         "Topic": Topic,
@@ -375,11 +387,16 @@ def NewMulti():
         data = json.load(f)
     f.close() #closes json file to allow for edditing inother functions
     QuestionNumber = max(i["Number"] for i in data["Questions"]) + 1 #goes through all current numbers in dictionary and retreves the largest value and add 1 to incriment and ensure unique id's
-    Question = input(f"What is the Question\n")
-    Answer1 = input("What is the 1st option ")
-    Answer2 = input("What is the 2nd option ")
-    Answer3 = input("What is the 3rd option ")
-    Answer = input("What is the answer ")
+    print(f"What is the Question")
+    Question = ValidInput()
+    print("What is the 1st option ")
+    Answer1 = ValidInput()
+    print("What is the 2nd option ")
+    Answer2 = ValidInput()
+    print("What is the 3rd option ")
+    Answer3 = ValidInput()
+    print("What is the answer ")
+    Answer2 = ValidInput()
     NewQuestion = {
         "Number": QuestionNumber,
         "Question": Question,
