@@ -9,7 +9,7 @@ class MCQuestions:
         self.Choices = Choices
         self.Answer = Answer
     def check(self,AnserGiven):
-        if self.Answer == AnserGiven: #checks to see if answer given is correct
+        if self.Answer.lower() == AnserGiven.lower(): #checks to see if answer given is correct
             return(True)
         else:
             return(False)

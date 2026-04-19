@@ -403,7 +403,7 @@ def NewMulti():
         "Option1": Answer1,
         "Option2": Answer2,
         "Option3": Answer3,
-        "Answer": Answer
+        "Answer": Answer1
     }
     data["Questions"].append(NewQuestion)
     with open ("MultiQuestions.json","w") as f:
