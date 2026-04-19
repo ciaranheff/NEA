@@ -57,7 +57,7 @@ def TopicMenu(User):
                     os.system("cls")
                     print("invalid number input")
                 for i in QuestionList:
-                    if Quest == i.Number and i.Topic == What:
+                    if Quest == i.Number and i.Topic.lower() == What:
                         Correct = (QuestionChosen(i))
                         AddTopicSaveData(User,i.Topic,Correct)
 
